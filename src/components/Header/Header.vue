@@ -1,8 +1,8 @@
 <template>
   <header :class="{ 'header': true, 'header-scrolled': scrolled }">
     <div class="container">
-      <div class="logo">
-        <h1>FreeForY🖤U</h1>
+      <div class="logo" ref="logoContainer">
+        <h1 ref="logoTitle">FreeForY🖤U</h1>
       </div>
       <nav class="desktop-nav">
         <ul>
@@ -32,6 +32,8 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const scrolled = ref(false);
 const mobileMenuOpen = ref(false);
+const logoTitle = ref(null);
+const logoContainer = ref(null);
 
 // Gestion du menu mobile
 const toggleMobileMenu = () => {
@@ -57,12 +59,52 @@ const handleScroll = () => {
   }
 };
 
+// Fonction pour ajuster la taille de la police du titre
+const adjustLogoFontSize = () => {
+  if (!logoTitle.value || !logoContainer.value) return;
+  
+  const containerWidth = logoContainer.value.clientWidth;
+  const title = logoTitle.value;
+  
+  // Réinitialiser la taille de police pour mesurer correctement
+  title.style.fontSize = '2rem';
+  
+  // Vérifier si le titre déborde et ajuster la taille
+  if (title.scrollWidth > containerWidth) {
+    const ratio = containerWidth / title.scrollWidth;
+    const newSize = Math.max(1, Math.floor(2 * ratio * 100) / 100);
+    title.style.fontSize = `${newSize}rem`;
+  }
+};
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  
+  // Observer les changements de taille pour ajuster la police
+  if (typeof ResizeObserver !== 'undefined') {
+    const resizeObserver = new ResizeObserver(() => {
+      adjustLogoFontSize();
+    });
+    
+    if (logoContainer.value) {
+      resizeObserver.observe(logoContainer.value);
+    }
+  }
+  
+  // Ajuster immédiatement la taille de police
+  adjustLogoFontSize();
+  
+  // Ajuster après le chargement complet
+  window.addEventListener('load', adjustLogoFontSize);
+  
+  // Ajuster lors des modifications de fenêtre
+  window.addEventListener('resize', adjustLogoFontSize);
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('load', adjustLogoFontSize);
+  window.removeEventListener('resize', adjustLogoFontSize);
 });
 </script>
 
@@ -99,6 +141,9 @@ onUnmounted(() => {
   -webkit-text-fill-color: transparent;
   font-weight: 700;
   letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .desktop-nav ul {
@@ -198,6 +243,22 @@ onUnmounted(() => {
   
   .mobile-menu-toggle {
     display: flex;
+  }
+  
+  .logo h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo h1 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo h1 {
+    font-size: 1rem;
   }
 }
 </style>
