@@ -37,17 +37,17 @@ const djs = ref([
   {
     name: 'ZKU',
     initial: 'Z',
-    description: 'Ambiance électro unique et vibrante'
+    description: 'Hard Indu, Raw et Hard Techno – un mix percutant et implacable'
   },
   {
     name: 'Techsouye',
     initial: 'T',
-    description: 'Beats techno et progressive house'
+    description: 'Hardtek, Indu et Acid – un trip brut et hypnotique'
   },
   {
     name: 'Antoine',
     initial: 'A',
-    description: 'Mélange de house et de disco rétro'
+    description: 'Raw, Hard Techno et Uptempo – une montée d’adrénaline sans relâche'
   }
 ]);
 
