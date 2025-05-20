@@ -17,15 +17,18 @@
         </div>
         
         <div class="footer-socials">
-          <h3>Contact</h3>
-          <div class="social-icons">
-            <a href="https://www.instagram.com/julien_dpz/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram du développeur">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-              </svg>
-            </a>
+          <h3>Le développeur</h3>
+          <div class="dev-container">
+            <div class="social-icons">
+              <a href="https://www.instagram.com/julien_dpz/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram du développeur">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <span class="dev-username">julien_dpz</span>
+            </div>
           </div>
         </div>
       </div>
@@ -278,9 +281,34 @@ onMounted(() => {
   transform: translateX(3px);
 }
 
+.dev-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .social-icons {
   display: flex;
   gap: 15px;
+  align-items: center;
+}
+
+.dev-username {
+  color: var(--acid-burn);
+  font-weight: 500;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+  animation: username-glow 3s infinite alternate;
+}
+
+@keyframes username-glow {
+  0% {
+    text-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 12px rgba(0, 255, 102, 0.7);
+  }
 }
 
 .social-icon {
@@ -504,6 +532,10 @@ onMounted(() => {
   }
   
   .social-icons {
+    justify-content: center;
+  }
+  
+  .dev-container {
     justify-content: center;
   }
   
