@@ -1,21 +1,44 @@
 :root {
-  /* Palette de couleurs */
-  --orange-primary: #FF6D00;
-  --orange-secondary: #FF7900;
-  --orange-tertiary: #FF8500;
-  --orange-quaternary: #FF9100;
-  --orange-quinary: #FF9E00;
+  /* Nouvelle palette ultra-agressive */
+  /* Couleurs de fond - Du plus sombre au moins sombre */
+  --black-void: #000000;        /* Noir absolu - fond principal */
+  --acid-black: #0A0A0A;        /* Noir texture - arrière-plans secondaires */
+  --toxic-night: #070017;       /* Bleu-noir toxique - gradients de fond */
+  --blood-depth: #120007;       /* Rouge très foncé - fond alternatif */
+
+  /* Couleurs d'accent principales - Ultra-vives et agressives */
+  --acid-burn: #00FF66;         /* Vert acid ultra-saturé - néons principaux */
+  --blood-scream: #FF0733;      /* Rouge sang vibrant - accents secondaires */
+  --shock-purple: #BC13FE;      /* Violet électrique - accents tertiaires */
+  --radiation: #D7FE13;         /* Jaune radioactif - alertes, highlights */
+
+  /* Couleurs intermédiaires */
+  --toxic-gray: #1B1B1B;        /* Gris charbon - conteneurs, cartes */
+  --steel-night: #2A2A3A;       /* Bleu-gris métallique - éléments secondaires */
+  --neon-shadow: #0F0F13;       /* Ombre pour effet néon */
+  --scan-line: #131313;         /* Pour effet scan-line rétro */
+
+  /* Couleurs de texte */
+  --text-primary: #FFFFFF;      /* Blanc pur - texte principal */
+  --text-secondary: #CCCCCC;    /* Gris clair - texte secondaire */
+  --text-muted: #777777;        /* Gris moyen - texte peu important */
   
-  /* Dégradés violets */
-  --purple-deep: #240046;
-  --purple-dark: #3C096C;
-  --purple-medium: #5A189A;
-  --purple-light: #7B2CBF;
-  --purple-bright: #9D4EDD;
+  /* Pour compatibilité avec le code existant */
+  --orange-primary: var(--blood-scream);
+  --orange-secondary: var(--shock-purple);
+  --orange-tertiary: var(--acid-burn);
+  --orange-quaternary: var(--radiation);
+  --orange-quinary: var(--radiation);
+  
+  --purple-deep: var(--toxic-night);
+  --purple-dark: var(--blood-depth);
+  --purple-medium: var(--steel-night);
+  --purple-light: var(--toxic-gray);
+  --purple-bright: var(--shock-purple);
   
   /* Autres variables */
-  --text-color: rgba(255, 255, 255, 0.9);
-  --background-gradient: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-dark) 50%, var(--purple-medium) 100%);
+  --text-color: var(--text-primary);
+  --background-gradient: linear-gradient(135deg, var(--black-void) 0%, var(--toxic-night) 50%, var(--blood-depth) 100%);
   
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
