@@ -48,59 +48,75 @@ const djs = ref([
     name: 'Antoine',
     initial: 'A',
     description: 'Raw, Hard Techno et Uptempo – une montée d’adrénaline sans relâche'
-  }
+  },
+  {
+    name: 'Chloe',
+    initial: 'C',
+    description: 'Techno pure et sans détour – une énergie brute qui fait vibrer le sol'
+  },
 ]);
 
 const djCards = ref([]);
 const vinyl = ref(null);
 
-// Animation lors du survol
+const animateCard = (card) => {
+  const soundwave = card.querySelector('.soundwave');
+  gsap.to(card, {
+    scale: 1.03,
+    boxShadow: '0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 102, 0.2)',
+    background: 'rgba(10, 10, 10, 0.8)',
+    duration: 0.3
+  });
+  gsap.to(soundwave.querySelectorAll('.bar'), {
+    height: () => 10 + Math.random() * 20,
+    duration: 0.2,
+    repeat: -1,
+    yoyo: true,
+    ease: 'power1.inOut',
+    stagger: {
+      each: 0.05,
+      from: 'center'
+    }
+  });
+};
+
+const resetCard = (card) => {
+  const soundwave = card.querySelector('.soundwave');
+  gsap.to(card, {
+    scale: 1,
+    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)',
+    duration: 0.3
+  });
+  gsap.killTweensOf(soundwave.querySelectorAll('.bar'));
+  gsap.to(soundwave.querySelectorAll('.bar'), {
+    height: 3,
+    duration: 0.2,
+    stagger: {
+      each: 0.02,
+      from: 'center'
+    }
+  });
+};
+
 const hoverDj = (index) => {
   if (djCards.value && djCards.value[index]) {
-    const card = djCards.value[index];
-    const soundwave = card.querySelector('.soundwave');
-    
-    gsap.to(card, {
-      scale: 1.03,
-      boxShadow: '0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 102, 0.2)',
-      background: 'rgba(10, 10, 10, 0.8)',
-      duration: 0.3
-    });
-    
-    gsap.to(soundwave.querySelectorAll('.bar'), {
-      height: () => 10 + Math.random() * 20,
-      duration: 0.2,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power1.inOut',
-      stagger: {
-        each: 0.05,
-        from: 'center'
-      }
-    });
+    // Appliquer l'animation sur la carte survolée
+    animateCard(djCards.value[index]);
+  }
+  // Si la carte survolée n'est pas la dernière, appliquez également l'animation au dernier DJ
+  if (djCards.value && index !== djCards.value.length - 1) {
+    animateCard(djCards.value[djCards.value.length - 1]);
   }
 };
 
 const unhoverDj = (index) => {
   if (djCards.value && djCards.value[index]) {
-    const card = djCards.value[index];
-    const soundwave = card.querySelector('.soundwave');
-    
-    gsap.to(card, {
-      scale: 1,
-      boxShadow: '0 5px 15px rgba(0, 0, 0, 0.2)',
-      duration: 0.3
-    });
-    
-    gsap.killTweensOf(soundwave.querySelectorAll('.bar'));
-    gsap.to(soundwave.querySelectorAll('.bar'), {
-      height: 3,
-      duration: 0.2,
-      stagger: {
-        each: 0.02,
-        from: 'center'
-      }
-    });
+    // Réinitialiser l'animation sur la carte survolée
+    resetCard(djCards.value[index]);
+  }
+  // Si la carte survolée n'est pas la dernière, réinitialiser également l'animation sur le dernier DJ
+  if (djCards.value && index !== djCards.value.length - 1) {
+    resetCard(djCards.value[djCards.value.length - 1]);
   }
 };
 
@@ -115,7 +131,7 @@ onMounted(() => {
     });
   }
   
-  // Animation des cartes DJ
+  // Animation des cartes DJ lors de l'apparition (scroll)
   if (djCards.value.length) {
     djCards.value.forEach((card, index) => {
       gsap.from(card, {
@@ -165,7 +181,7 @@ onMounted(() => {
 
 .dj-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   position: relative;
   z-index: 2;
